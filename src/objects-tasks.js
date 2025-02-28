@@ -168,8 +168,28 @@ function makeWord(lettersObject) {
  *    sellTickets([25, 25, 50]) => true
  *    sellTickets([25, 100]) => false (The seller does not have enough money to give change.)
  */
-function sellTickets(/* queue */) {
-  throw new Error('Not implemented');
+function sellTickets(queue) {
+  let boolean = true;
+  const zdacha = [];
+  for (let i = 0; i < queue.length; i += 1) {
+    if (queue[i] === 25) {
+      zdacha.push(queue[i]);
+    } else if (queue[i] === 50) {
+      if (zdacha.includes(25)) {
+        zdacha.push(queue[i]);
+      } else boolean = false;
+    } else if (queue[i] === 100) {
+      if (
+        zdacha.includes(25) &&
+        zdacha.reduce((sum, n) => {
+          return sum + n;
+        }, 0) >= 75
+      ) {
+        zdacha.push(queue[i]);
+      } else boolean = false;
+    }
+  }
+  return boolean;
 }
 
 /**
